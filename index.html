@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph Mastery: เกมจำลองฝึกทำข้อสอบอัลกอริทึมกราฟ</title>
+  <meta name="description" content="เกมจำลองข้อสอบแบบอินเทอร์แอคทีฟ ฝึกทำข้อสอบวิชาโครงสร้างข้อมูลและอัลกอริทึมกราฟ BFS, DFS, Dijkstra, Prim, Kruskal">
+  
+  <!-- Google Fonts: Prompt & Outfit & Inter -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='%2300f2fe'/><circle cx='7' cy='7' r='3' fill='%230d1527'/><circle cx='17' cy='7' r='3' fill='%230d1527'/><circle cx='12' cy='17' r='3' fill='%230d1527'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Glow Effects -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <div class="app-wrapper">
+    <!-- Header & Player HUD -->
+    <header class="app-header">
+      <div class="brand-area">
+        <div class="brand-logo-glow">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="6" r="3"></circle>
+            <circle cx="18" cy="6" r="3"></circle>
+            <circle cx="18" cy="18" r="3"></circle>
+            <circle cx="6" cy="18" r="3"></circle>
+            <line x1="9" y1="6" x2="15" y2="6"></line>
+            <line x1="18" y1="9" x2="18" y2="15"></line>
+            <line x1="8.5" y1="8.5" x2="15.5" y2="15.5"></line>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Graph Mastery</h1>
+          <span class="brand-sub">The Algorithm Exam Arena</span>
+        </div>
+      </div>
+
+      <!-- Player HUD Stats -->
+      <div class="hud-stats-container">
+        <div class="hud-card hud-profile">
+          <div class="hud-avatar">🧙‍♂️</div>
+          <div class="hud-info">
+            <div class="hud-top-line">
+              <span class="hud-badge-level">Lv.<span id="hud-level">1</span></span>
+              <span id="hud-title" class="hud-title-text">Novice Traverser</span>
+            </div>
+            <div class="hud-xp-track">
+              <div id="hud-xp-progress" class="hud-xp-fill"></div>
+            </div>
+            <div class="hud-xp-nums"><span id="hud-xp">0 / 100 XP</span></div>
+          </div>
+        </div>
+
+        <div class="hud-card hud-streak-badge">
+          <span class="streak-flame">🔥</span>
+          <div>
+            <div class="streak-num" id="hud-streak">0</div>
+            <div class="streak-label">Streak ต่อเนื่อง</div>
+          </div>
+        </div>
+
+        <button id="sound-toggle-btn" class="btn btn-outline btn-sm">
+          🔊 เสียงเปิด
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-bar">
+      <button class="nav-tab active" data-mode="campaign" onclick="game.switchMode('campaign')">
+        🏰 ดันเจี้ยนตะลุยด่าน (Campaign)
+      </button>
+      <button class="nav-tab" data-mode="exam" onclick="game.switchMode('exam')">
+        ⏱️ จำลองห้องสอบจับเวลา (Mock Exam)
+      </button>
+      <button class="nav-tab" data-mode="lab" onclick="game.switchMode('lab')">
+        🕹️ ห้องทดลองจำลองภาพ (Interactive Lab)
+      </button>
+      <button class="nav-tab" data-mode="cheatsheet" onclick="game.switchMode('cheatsheet')">
+        📖 สรุปย่อหัวใจก่อนสอบ (Cheat Sheet)
+      </button>
+    </nav>
+
+    <!-- Main Dynamic Content Mount Area -->
+    <main id="main-game-area" class="main-content-area">
+      <!-- Injected dynamically by app.js -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Data Structures & Graph Algorithms • ออกแบบจำลองตามเนื้อหาสไลด์ 27 สไลด์ (อ.พิเศษพงศ์ สุธาพันธ์)</p>
+      <p class="text-dim">ครอบคลุม: Graph Types • Matrix vs List • BFS • DFS • Prim's • Kruskal's • Dijkstra</p>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="questions.js"></script>
+  <script src="graph-sim.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

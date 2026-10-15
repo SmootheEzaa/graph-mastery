@@ -1,0 +1,577 @@
+=== SLIDE 1 ===
+โครงสร้างข้อมูล
+Graph Algorithms
+อัลกอริทึมกราฟสำหรับวิชาโครงสร้างข้อมูล
+BFS / DFS / Dijkstra / Prim / Kruskal
+Graph Representations • Shortest Path • MST
+1
+สร้างโดย 
+Quick
+ควบคุมโดย อ.พิเศษพงศ์ สุธาพันธ์
+
+=== SLIDE 2 ===
+Data Structures — Graph Algorithms
+เนื้อหาที่จะเรียน
+01
+Graph คืออะไร? + ประเภทกราฟ
+คำศัพท์พื้นฐานและประเภทต่างๆ
+02
+Graph Representations
+Adjacency Matrix vs Adjacency List
+03
+BFS — Breadth-First Search
+การท่องไปแบบกว้าง + Queue
+04
+DFS — Depth-First Search
+การท่องไปแบบลึก + Stack/Recursion
+05
+Dijkstra's Algorithm
+หาเส้นทางสั้นที่สุด (Shortest Path)
+06
+Prim's & Kruskal's Algorithm
+Minimum Spanning Tree (MST)
+07
+สรุปรวม + เปรียบเทียบ
+ตารางเปรียบเทียบและ Time Complexity
+ส่วนที่ 1
+Graph Representations
+& BFS / DFS
+ส่วนที่ 2
+Shortest Path
+& Minimum Spanning Tree
+2
+
+=== SLIDE 3 ===
+Data Structures — Graph Algorithms
+Graph (กราฟ) คืออะไร?
+โครงสร้างข้อมูลที่แสดงความสัมพันธ์ระหว่างสิ่งต่างๆ
+จุดยอด (Vertex / Node)
+แทนสิ่งที่เราสนใจ
+เช่น เมือง, คน, คอมพิวเตอร์
+เส้นเชื่อม (Edge)
+แทนความสัมพันธ์ระหว่างจุดยอด
+เช่น ถนน, มิตรภาพ, ลิงก์เว็บ
+A
+B
+C
+D
+E
+G = (V, E) — V = เซตของจุดยอด, E = เซตของเส้นเชื่อม
+3
+
+=== SLIDE 4 ===
+Data Structures — Graph Algorithms
+ประเภทของกราฟ (Graph Types)
+ประเภท
+คำอธิบาย
+ตัวอย่าง
+Undirected Graph
+เส้นเชื่อมไม่มีทิศทาง (ไป-กลับได้)
+ถนนสองทาง
+Directed Graph
+เส้นเชื่อมมีทิศทาง (ทางเดียว)
+ลิงก์เว็บ, ถนนทางเดียว
+Weighted Graph
+เส้นเชื่อมมีน้ำหนัก (Weight)
+แผนที่ระยะทาง
+Unweighted Graph
+เส้นเชื่อมไม่มีน้ำหนัก
+เครือข่ายสังคม
+Cyclic Graph
+มีวงจร (Cycle)
+เส้นทางวนกลับ
+DAG (Acyclic)
+ไม่มีวงจร
+Task Scheduling
+4
+
+=== SLIDE 5 ===
+Data Structures — Graph Algorithms
+ประเภทของกราฟ (Graph Types)
+5
+
+=== SLIDE 6 ===
+Data Structures — Graph Algorithms
+ประเภทของกราฟ (Graph Types)
+6
+
+=== SLIDE 7 ===
+Data Structures — Graph Algorithms
+ประเภทของกราฟ (Graph Types)
+7
+
+=== SLIDE 8 ===
+Data Structures — Graph Algorithms
+ประเภทของกราฟ (Graph Types)
+8
+
+=== SLIDE 9 ===
+GRAPH THEORY & DATA STRUCTURES
+Dense Graph vs. Sparse Graph
+การเปรียบเทียบความแตกต่าง ลักษณะโครงสร้าง และโครงสร้างข้อมูลที่เหมาะสม
+|E| ≈ |V|²
+|E| « |V|²
+Dense Graph
+กราฟหนาแน่น
+นิยามและลักษณะ
+จำนวนเส้นเชื่อม (Edge) สูงมากใกล้เคียงกับจำนวนเส้นเชื่อมสูงสุดที่เป็นไปได้ ทุกจุดเชื่อมต่อกันอย่างแออัด
+โครงสร้างที่เหมาะสม: Adjacency Matrix
+ตรวจสอบเส้นเชื่อมรวดเร็ว O(1) ใช้พื้นที่ตารางได้คุ้มค่า
+Sparse Graph
+กราฟเบาบาง
+นิยามและลักษณะ
+จำนวนเส้นเชื่อม (Edge) น้อยมากเมื่อเทียบกับจุดยอด (Vertex) โครงสร้างโปร่ง เส้นเชื่อมกระจายตัว
+โครงสร้างที่เหมาะสม: Adjacency List
+ประหยัดพื้นที่จัดเก็บ O(V + E) ไม่เสียพื้นที่เก็บค่า 0
+
+=== SLIDE 10 ===
+Data Structures — Graph Algorithms
+Adjacency Matrix (เมทริกซ์ประชิด)
+ใช้ตาราง 2 มิติ ขนาด V × V เก็บความสัมพันธ์ระหว่างจุดยอด
+0
+1
+2
+3
+0
+0
+1
+1
+0
+1
+1
+0
+0
+1
+2
+1
+0
+0
+1
+3
+0
+1
+1
+0
+ข้อดี
+• ตรวจสอบเส้นเชื่อม O(1)
+• เหมาะกับ Dense Graph
+ข้อเสีย
+• ใช้หน่วยความจำ O(V²)
+• ไม่เหมาะกับ Sparse Graph
+กราฟ 4 จุดยอด เส้นเชื่อม: 0-1, 0-2, 1-3, 2-3
+หลักการ: 
+ถ้ามีเส้นเชื่อมจาก i ไป j → matrix[i][j] = 1 (หรือน้ำหนัก)   |   ถ้าไม่มี → matrix[i][j] = 0
+10
+
+=== SLIDE 11 ===
+Data Structures — Graph Algorithms
+Adjacency List (รายการประชิด) ⭐
+ใช้ Array of Lists เก็บเพื่อนบ้านของแต่ละจุดยอด — นิยมใช้มากที่สุด!
+0
+[1, 2]
+1
+[0, 3]
+2
+[0, 3]
+3
+[1, 2]
+ข้อดี
+• หน่วยความจำ O(V+E)
+• เหมาะกับ Sparse Graph
+• ท่องไปในเพื่อนบ้านเร็ว
+ข้อเสีย
+• ตรวจสอบเส้นเชื่อม
+  ช้ากว่า O(degree)
+self.adj_list = {i: [] for i in range(num_vertices)}
+11
+
+=== SLIDE 12 ===
+BFS — Breadth-First Search
+การท่องไปแบบกว้าง — สำรวจทีละระดับ (Level by Level)
+ขั้นตอน (Algorithm)
+1
+ใส่จุดเริ่มต้นลงใน Queue + ทำเครื่องหมาย visited
+2
+ดึงจุดยอดออกจาก Queue (dequeue)
+3
+สำรวจเพื่อนบ้านทั้งหมด
+4
+ถ้ายังไม่ visited → ใส่ลง Queue
+5
+ทำซ้ำจน Queue ว่าง
+โครงสร้างข้อมูลที่ใช้
+Queue (คิว)
+  FIFO — First In, First Out
+Visited Set
+  เก็บจุดยอดที่เยี่ยมแล้ว
+Time
+O(V + E)
+Space
+O(V)
+การประยุกต์ใช้
+เส้นทางสั้นสุด (Unweighted) • Connected Components • Level Order
+12
+
+=== SLIDE 13 ===
+Data Structures — Graph Algorithms
+BFS Trace — การทำงานทีละขั้น
+Step
+Dequeue
+เพื่อนบ้าน
+Queue
+Visited
+เริ่ม
+—
+—
+[0]
+{0}
+1
+0
+1, 2
+[1, 2]
+{0, 1, 2}
+2
+1
+3, 4
+[2, 3, 4]
+{0, 1, 2, 3, 4}
+3
+2
+5
+[3, 4, 5]
+{0, 1, 2, 3, 4, 5}
+4
+3
+(ไม่มีใหม่)
+[4, 5]
+เหมือนเดิม
+5
+4
+(ไม่มีใหม่)
+[5]
+เหมือนเดิม
+6
+5
+(ไม่มีใหม่)
+[] ← จบ!
+เหมือนเดิม
+ผลลัพธ์ BFS: 
+0 → 1 → 2 → 3 → 4 → 5
+graph = {0:[1,2], 1:[0,3,4], 2:[0,5], 3:[1], 4:[1,5], 5:[2,4]}
+13
+
+=== SLIDE 14 ===
+DFS — Depth-First Search
+การท่องไปแบบลึก — ลึกลงไปให้สุดทางก่อนย้อนกลับ (Backtrack)
+ขั้นตอน (Algorithm)
+1
+เริ่มจากจุดเริ่มต้น + ทำเครื่องหมาย visited
+2
+สำรวจเพื่อนบ้านที่ยังไม่ visited
+3
+เลือกเพื่อนบ้านตัวแรก → ดำดิ่งลงไป (Recursive)
+4
+ไม่มีเพื่อนบ้านใหม่ → Backtrack
+5
+ทำซ้ำจนครบทุกจุดยอด
+โครงสร้างข้อมูลที่ใช้
+Stack (สแตก) / Recursion
+  LIFO — Last In, First Out
+Visited Set
+  เก็บจุดยอดที่เยี่ยมแล้ว
+Time
+O(V + E)
+Space
+O(V)
+การประยุกต์ใช้
+Cycle Detection • Topological Sort • Maze Solving • SCC
+14
+
+=== SLIDE 15 ===
+Data Structures — Graph Algorithms
+DFS Trace — การทำงานทีละขั้น (Recursive)
+dfs(0) → visited: {0}
+  ├─ dfs(1) → visited: {0, 1}
+  │    ├─ 0 → visited แล้ว ข้าม
+  │    ├─ dfs(3) → visited: {0,1,3}
+  │    │    └─ 1 → visited → backtrack
+  │    └─ dfs(4) → visited: {0,1,3,4}
+  │         ├─ 1 → visited ข้าม
+  │         └─ dfs(5) → {0,1,2,3,4,5}
+  │              └─ dfs(2) → backtrack
+  └─ 2 → visited แล้ว ข้าม
+ผลลัพธ์ DFS
+0 → 1 → 3 → 4 → 5 → 2
+DFS มี 2 แบบ
+Recursive
+ใช้ Call Stack ของระบบ
+Iterative (ใช้ Stack)
+ใช้ stack.pop() แทน recursion
+15
+
+=== SLIDE 16 ===
+Data Structures — Graph Algorithms
+เปรียบเทียบ BFS vs DFS
+คุณสมบัติ
+BFS
+DFS
+โครงสร้างข้อมูล
+Queue (FIFO)
+Stack / Recursion (LIFO)
+ลำดับการสำรวจ
+ทีละระดับ (Level by Level)
+ลึกสุดก่อน (Depth First)
+เส้นทางสั้นสุด
+✅ (Unweighted)
+❌ ไม่การันตี
+หน่วยความจำ
+มากกว่า (เก็บทั้งระดับ)
+น้อยกว่า
+ตรวจจับวงจร
+ได้
+ได้ (นิยมกว่า)
+Time Complexity
+O(V + E)
+O(V + E)
+💡 สรุป: 
+BFS หาเส้นทางสั้นสุดได้ (Unweighted) แต่ใช้หน่วยความจำมากกว่า  |  DFS ใช้หน่วยความจำน้อยแต่ดีกับ Cycle Detection
+16
+
+=== SLIDE 17 ===
+ส่วนที่ 2
+Shortest Path & MST
+เส้นทางสั้นที่สุดและต้นไม้แผ่ทั่วน้อยสุด
+Dijkstra's Algorithm
+Prim's Algorithm
+Kruskal's Algorithm
+17
+
+=== SLIDE 18 ===
+Data Structures — Graph Algorithms
+Minimum Spanning Tree (MST)
+ต้นไม้แผ่ทั่วน้อยสุด — เชื่อมต่อทุกจุดยอดด้วยน้ำหนักรวมน้อยที่สุด
+เชื่อมต่อทุกจุดยอด
+ทุกจุดยอดต้องเข้าถึงได้จากทุกจุดอื่น
+เส้นเชื่อม = V - 1
+จำนวนเส้นเชื่อมน้อยกว่าจำนวนจุดยอด 1
+ผลรวมน้ำหนักน้อยสุด
+ไม่มี Spanning Tree อื่นที่น้ำหนักรวมน้อยกว่า
+การประยุกต์ใช้งานจริง
+วางสายเคเบิล
+เชื่อมเมืองด้วยต้นทุนต่ำสุด
+เครือข่ายคอมพิวเตอร์
+ออกแบบเครือข่ายเชื่อมต่อ
+วางท่อน้ำ/ไฟฟ้า
+เชื่อมทุกจุดด้วยค่าใช้จ่ายต่ำสุด
+18
+
+=== SLIDE 19 ===
+Minimum Spanning Tree (MST)
+ต้นไม้แผ่ทั่วน้อยสุด — เชื่อมต่อทุกจุดยอดด้วยน้ำหนักรวมน้อยที่สุด
+19
+
+=== SLIDE 20 ===
+Prim's Algorithm ⭐
+ขยายต้นไม้ออกไปทีละเส้น — เลือกเส้นเชื่อมที่น้ำหนักน้อยสุดเสมอ
+ขั้นตอน (Algorithm)
+1
+เลือกจุดยอดเริ่มต้น ใส่ลง MST set
+2
+หา edge น้ำหนักน้อยสุดที่เชื่อม MST กับนอก
+3
+เพิ่ม edge + จุดยอดใหม่เข้า MST
+4
+ทำซ้ำจนครบ V-1 เส้นเชื่อม
+Trace การทำงาน
+ขั้น 1: เพิ่ม A → เลือก A-C(2) ✅
+ขั้น 2: เพิ่ม C → เลือก C-B(1) ✅
+ขั้น 3: เพิ่ม B → เลือก B-D(5) ✅
+ขั้น 4: เพิ่ม D → เลือก D-E(2) ✅
+MST: A-C(2), C-B(1), B-D(5), D-E(2)
+น้ำหนักรวม = 10
+Time: O((V+E) log V)
+  |  
+Space: O(V)
+20
+
+=== SLIDE 21 ===
+Data Structures — Graph Algorithms
+Kruskal's Algorithm (เสริม)
+อีกวิธีหา MST — เรียงเส้นเชื่อมตามน้ำหนัก แล้วเลือกทีละเส้นถ้าไม่เกิด Cycle
+1
+เรียง Edge
+ตามน้ำหนัก
+2
+เลือก Edge
+ตัวแรก
+3
+ตรวจ Cycle
+(Union-Find)
+4
+ไม่มี Cycle?
+เพิ่มใน MST
+5
+ทำซ้ำจนครบ
+V-1 เส้น
+Union-Find (Disjoint Set)
+find(x)
+ — หา root ของกลุ่ม + Path Compression
+union(x,y)
+ — รวมกลุ่ม + Union by Rank
+ถ้า find(u) == find(v) → อยู่กลุ่มเดียวกัน
+เพิ่ม edge จะเกิดวงจร → ข้าม!
+Trace การทำงาน
+เรียง: B-C(1), A-C(2), D-E(2),
+       A-B(4), B-D(5), C-D(8), C-E(10)
+เลือก B-C(1) ✅  A-C(2) ✅  D-E(2) ✅
+เลือก A-B(4) ❌(cycle!)  B-D(5) ✅
+MST รวม = 1+2+2+5 = 10
+21
+
+=== SLIDE 22 ===
+Dijkstra's Algorithm ⭐
+หาเส้นทางสั้นที่สุดจากจุดเริ่มต้นเดียว (Single Source Shortest Path)
+ขั้นตอน (Algorithm)
+1
+กำหนด dist[เริ่ม]=0, จุดอื่น=∞
+2
+ใส่จุดเริ่มต้นลง Priority Queue
+3
+ดึงจุดที่ dist น้อยสุดออกจาก PQ
+4
+สำรวจเพื่อนบ้าน: Relaxation
+5
+ทำซ้ำจน PQ ว่าง
+หลักการสำคัญ
+• ใช้หลัก Greedy — เลือกจุดที่ dist น้อยสุด
+• ใช้ได้เฉพาะ น้ำหนักไม่เป็นลบ เท่านั้น!
+• ใช้ Priority Queue (Min-Heap)
+Time
+O((V+E)logV)
+Space
+O(V)
+Relaxation:
+if dist[u] + w(u,v) < dist[v]
+   → อัปเดต dist[v] และใส่ลง PQ
+22
+
+=== SLIDE 23 ===
+Dijkstra's Algorithm ⭐
+หาเส้นทางสั้นที่สุดจากจุดเริ่มต้นเดียว (Single Source Shortest Path)
+23
+
+=== SLIDE 24 ===
+Data Structures — Graph Algorithms
+Dijkstra Trace — การทำงานทีละขั้น
+Step
+เลือก
+อัปเดต
+dist (A,B,C,D,E)
+เริ่ม
+—
+—
+(0, ∞, ∞, ∞, ∞)
+1
+A (0)
+B=4, C=2
+(0, 4, 2, ∞, ∞)
+2
+C (2)
+B=3✨ D=10 E=12
+(0, 3, 2, 10, 12)
+3
+B (3)
+D=8✨
+(0, 3, 2, 8, 12)
+4
+D (8)
+E=10✨
+(0, 3, 2, 8, 10)
+5
+E (10)
+ไม่มี → จบ!
+(0, 3, 2, 8, 10)
+ผลลัพธ์ ระยะทางสั้นสุดจาก A
+A → B: ระยะทาง = 3   เส้นทาง: A → C → B
+A → C: ระยะทาง = 2   เส้นทาง: A → C
+A → D: ระยะทาง = 8   เส้นทาง: A → C → B → D
+A → E: ระยะทาง = 10  เส้นทาง: A → C → B → D → E
+24
+
+=== SLIDE 25 ===
+Data Structures — Graph Algorithms
+เปรียบเทียบ Dijkstra vs Prim
+คุณสมบัติ
+Dijkstra
+Prim
+วัตถุประสงค์
+Shortest Path จากจุดเดียว
+Minimum Spanning Tree
+ผลลัพธ์
+ระยะทางสั้นสุดไปทุกจุด
+ต้นไม้น้ำหนักรวมน้อยสุด
+ประเภทกราฟ
+Directed / Undirected
+Undirected เท่านั้น
+น้ำหนักลบ
+❌ ใช้ไม่ได้
+✅ ใช้ได้
+หลักการ
+Greedy (เลือก dist น้อยสุด)
+Greedy (เลือก edge น้อยสุด)
+โครงสร้าง
+Priority Queue
+Priority Queue
+Time Complexity
+O((V+E) log V)
+O((V+E) log V)
+💡 สังเกต: 
+ทั้งคู่ใช้ Priority Queue + Greedy แต่ Dijkstra เลือกจุดที่ ระยะทางจากต้นทาง น้อยสุด  |  Prim เลือก edge ที่น้ำหนักน้อยสุด
+25
+
+=== SLIDE 26 ===
+Data Structures — Graph Algorithms
+สรุปรวม (Summary)
+หัวข้อ
+Algorithm
+ใช้ทำอะไร
+Time
+Traversal
+BFS
+ท่องไปแบบกว้าง, เส้นทางสั้นสุด (unweighted)
+O(V + E)
+Traversal
+DFS
+ท่องไปแบบลึก, Cycle, Topological Sort
+O(V + E)
+Shortest Path
+Dijkstra
+เส้นทางสั้นสุด (weighted, non-negative)
+O((V+E)logV)
+MST
+Prim
+ต้นไม้แผ่ทั่วน้อยสุด (จากจุดเดียว)
+O((V+E)logV)
+MST
+Kruskal
+ต้นไม้แผ่ทั่วน้อยสุด (เรียง edge)
+O(E log E)
+Traversal
+BFS (กว้าง) / DFS (ลึก)
+Shortest Path
+Dijkstra (non-negative)
+MST
+Prim / Kruskal
+26
+
+=== SLIDE 27 ===
+คำถาม
+?
+Graph Algorithms เป็นหัวใจสำคัญของ Data Structures
+ทุกอัลกอริทึมมีโค้ด Python พร้อม Trace ละเอียด
+BFS / DFS
+Dijkstra
+Prim
+Kruskal
+27
+
